@@ -25,6 +25,7 @@ export const InputNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Input"
+      description="Capture user-provided workflow data."
       variant="input"
       handles={[
         {

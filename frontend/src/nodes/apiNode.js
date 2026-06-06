@@ -25,6 +25,7 @@ export const APINode = ({ id, data }) => {
   return (
     <BaseNode
       title="API"
+      description="Request external services and pass the response forward."
       variant="api"
       handles={[
         {

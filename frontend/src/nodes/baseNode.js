@@ -2,7 +2,7 @@
 
 import { Handle } from 'reactflow';
 
-export const BaseNode = ({ title, children, handles = [], style = {}, variant = 'default' }) => {
+export const BaseNode = ({ title, description, children, handles = [], style = {}, variant = 'default' }) => {
   return (
     <div className={`base-node node-accent--${variant}`} style={style}>
       {handles.map((handle) => (
@@ -17,6 +17,7 @@ export const BaseNode = ({ title, children, handles = [], style = {}, variant = 
       ))}
       <div className="base-node__header">
         <span className="base-node__title">{title}</span>
+        {description && <span className="base-node__description">{description}</span>}
       </div>
       <div className="base-node__body">
         {children}

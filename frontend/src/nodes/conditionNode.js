@@ -18,6 +18,7 @@ export const ConditionNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Condition"
+      description="Split flow into true and false branches."
       variant="condition"
       handles={[
         {

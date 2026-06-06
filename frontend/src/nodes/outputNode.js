@@ -25,6 +25,7 @@ export const OutputNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Output"
+      description="Publish the final workflow result."
       variant="output"
       handles={[
         {

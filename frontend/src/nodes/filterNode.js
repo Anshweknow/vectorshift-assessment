@@ -18,6 +18,7 @@ export const FilterNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Filter"
+      description="Allow matching values through the pipeline."
       variant="filter"
       handles={[
         {
