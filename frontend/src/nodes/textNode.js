@@ -39,6 +39,13 @@ export const TextNode = ({ id, data }) => {
   const [currText, setCurrText] = useState(data?.text || '{{input}}');
 
   const variables = useMemo(() => getVariablesFromText(currText), [currText]);
+
+  useEffect(() => {
+    if (typeof data?.text === 'string' && data.text !== currText) {
+      setCurrText(data.text);
+    }
+  }, [currText, data?.text]);
+
   const nodeSize = useMemo(() => getTextNodeSize(currText, variables.length), [currText, variables.length]);
 
   useEffect(() => {
@@ -62,6 +69,7 @@ export const TextNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Text"
+      description="Use {{variables}} to create dynamic input handles."
       variant="text"
       style={nodeSize}
       handles={[

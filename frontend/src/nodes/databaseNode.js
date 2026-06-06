@@ -18,6 +18,7 @@ export const DatabaseNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Database"
+      description="Query saved data and expose the result."
       variant="database"
       handles={[
         {

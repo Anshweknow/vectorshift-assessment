@@ -304,6 +304,15 @@ code {
   letter-spacing: -0.01em;
 }
 
+.base-node__description {
+  display: block;
+  margin-top: 3px;
+  color: var(--color-text-muted);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
 .base-node__body {
   padding: 10px 12px 12px 18px;
 }

@@ -8,6 +8,7 @@ export const LLMNode = ({ id }) => {
   return (
     <BaseNode
       title="LLM"
+      description="Generate a response from system and prompt inputs."
       variant="llm"
       handles={[
         {

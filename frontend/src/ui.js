@@ -56,8 +56,19 @@ export const PipelineUI = () => {
     } = useStore(selector, shallow);
 
     const getInitNodeData = (nodeID, type) => {
-      let nodeData = { id: nodeID, nodeType: `${type}` };
-      return nodeData;
+      const nodeDefaults = {
+        customInput: { inputName: nodeID.replace('customInput-', 'input_'), inputType: 'Text' },
+        llm: { model: 'gpt-4', temperature: 0.7 },
+        customOutput: { outputName: nodeID.replace('customOutput-', 'output_'), outputType: 'Text' },
+        text: { text: '{{input}}', variables: ['input'] },
+        api: { endpointUrl: 'https://api.example.com', method: 'GET' },
+        database: { databaseName: 'default_db' },
+        filter: { conditionText: 'value contains text' },
+        email: { recipientEmail: 'user@example.com' },
+        condition: { conditionExpression: 'value === true' },
+      };
+
+      return { id: nodeID, nodeType: `${type}`, ...(nodeDefaults[type] || {}) };
     }
 
     const onDrop = useCallback(

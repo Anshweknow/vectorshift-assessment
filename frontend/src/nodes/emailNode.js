@@ -18,6 +18,7 @@ export const EmailNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Email"
+      description="Send a connected message to a recipient."
       variant="email"
       handles={[
         {
