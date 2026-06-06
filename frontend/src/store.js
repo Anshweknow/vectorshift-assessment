@@ -43,11 +43,14 @@ export const useStore = create((set, get) => ({
     updateNodeField: (nodeId, fieldName, fieldValue) => {
       set({
         nodes: get().nodes.map((node) => {
-          if (node.id === nodeId) {
-            node.data = { ...node.data, [fieldName]: fieldValue };
+          if (node.id !== nodeId) {
+            return node;
           }
-  
-          return node;
+
+          return {
+            ...node,
+            data: { ...node.data, [fieldName]: fieldValue },
+          };
         }),
       });
     },
