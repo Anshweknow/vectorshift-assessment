@@ -7,8 +7,14 @@ import { useStore } from '../store';
 
 export const InputNode = ({ id, data }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);
-  const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
-  const [inputType, setInputType] = useState(data.inputType || 'Text');
+
+  const [currName, setCurrName] = useState(
+    data?.inputName || id.replace('customInput-', 'input_')
+  );
+
+  const [inputType, setInputType] = useState(
+    data?.inputType || 'Text'
+  );
 
   const handleNameChange = (e) => {
     const value = e.target.value;
@@ -25,6 +31,8 @@ export const InputNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Input"
+      description="Capture user-provided workflow data."
+      variant="input"
       handles={[
         {
           type: 'source',
@@ -33,18 +41,24 @@ export const InputNode = ({ id, data }) => {
         },
       ]}
     >
-      <div>
-        <label>
-          Name:
-          <input 
-            type="text" 
-            value={currName} 
-            onChange={handleNameChange} 
+      <div className="node-form">
+        <label className="node-field">
+          Name
+          <input
+            className="node-input"
+            type="text"
+            value={currName}
+            onChange={handleNameChange}
           />
         </label>
-        <label>
-          Type:
-          <select value={inputType} onChange={handleTypeChange}>
+
+        <label className="node-field">
+          Type
+          <select
+            className="node-select"
+            value={inputType}
+            onChange={handleTypeChange}
+          >
             <option value="Text">Text</option>
             <option value="File">File</option>
           </select>
@@ -52,4 +66,4 @@ export const InputNode = ({ id, data }) => {
       </div>
     </BaseNode>
   );
-}
+};

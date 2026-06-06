@@ -7,7 +7,10 @@ import { useStore } from '../store';
 
 export const EmailNode = ({ id, data }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);
-  const [recipientEmail, setRecipientEmail] = useState(data?.recipientEmail || 'user@example.com');
+
+  const [recipientEmail, setRecipientEmail] = useState(
+    data?.recipientEmail || 'user@example.com'
+  );
 
   const handleRecipientChange = (e) => {
     const value = e.target.value;
@@ -18,6 +21,8 @@ export const EmailNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Email"
+      description="Send a connected message to a recipient."
+      variant="email"
       handles={[
         {
           type: 'target',
@@ -26,10 +31,11 @@ export const EmailNode = ({ id, data }) => {
         },
       ]}
     >
-      <div>
-        <label>
-          Recipient:
+      <div className="node-form">
+        <label className="node-field">
+          Recipient
           <input
+            className="node-input"
             type="email"
             value={recipientEmail}
             onChange={handleRecipientChange}
@@ -38,4 +44,4 @@ export const EmailNode = ({ id, data }) => {
       </div>
     </BaseNode>
   );
-}
+};

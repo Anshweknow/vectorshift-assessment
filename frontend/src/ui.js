@@ -56,8 +56,19 @@ export const PipelineUI = () => {
     } = useStore(selector, shallow);
 
     const getInitNodeData = (nodeID, type) => {
-      let nodeData = { id: nodeID, nodeType: `${type}` };
-      return nodeData;
+      const nodeDefaults = {
+        customInput: { inputName: nodeID.replace('customInput-', 'input_'), inputType: 'Text' },
+        llm: { model: 'gpt-4', temperature: 0.7 },
+        customOutput: { outputName: nodeID.replace('customOutput-', 'output_'), outputType: 'Text' },
+        text: { text: '{{input}}', variables: ['input'] },
+        api: { endpointUrl: 'https://api.example.com', method: 'GET' },
+        database: { databaseName: 'default_db' },
+        filter: { conditionText: 'value contains text' },
+        email: { recipientEmail: 'user@example.com' },
+        condition: { conditionExpression: 'value === true' },
+      };
+
+      return { id: nodeID, nodeType: `${type}`, ...(nodeDefaults[type] || {}) };
     }
 
     const onDrop = useCallback(
@@ -99,27 +110,31 @@ export const PipelineUI = () => {
     }, []);
 
     return (
-        <>
-        <div ref={reactFlowWrapper} style={{width: '100wv', height: '70vh'}}>
-            <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                onDrop={onDrop}
-                onDragOver={onDragOver}
-                onInit={setReactFlowInstance}
-                nodeTypes={nodeTypes}
-                proOptions={proOptions}
-                snapGrid={[gridSize, gridSize]}
-                connectionLineType='smoothstep'
-            >
-                <Background color="#aaa" gap={gridSize} />
-                <Controls />
-                <MiniMap />
-            </ReactFlow>
-        </div>
-        </>
+        <section className="workspace-card" aria-label="Pipeline workspace">
+            <div className="workspace-card__header">
+                <h2 className="workspace-card__title">Pipeline canvas</h2>
+                <span className="workspace-card__meta">{nodes.length} nodes · {edges.length} edges</span>
+            </div>
+            <div ref={reactFlowWrapper} className="react-flow-wrapper">
+                <ReactFlow
+                    nodes={nodes}
+                    edges={edges}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    onDrop={onDrop}
+                    onDragOver={onDragOver}
+                    onInit={setReactFlowInstance}
+                    nodeTypes={nodeTypes}
+                    proOptions={proOptions}
+                    snapGrid={[gridSize, gridSize]}
+                    connectionLineType='smoothstep'
+                >
+                    <Background color="#CBD5E1" gap={gridSize} />
+                    <Controls />
+                    <MiniMap />
+                </ReactFlow>
+            </div>
+        </section>
     )
 }

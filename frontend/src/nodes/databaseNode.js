@@ -7,7 +7,10 @@ import { useStore } from '../store';
 
 export const DatabaseNode = ({ id, data }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);
-  const [databaseName, setDatabaseName] = useState(data?.databaseName || 'default_db');
+
+  const [databaseName, setDatabaseName] = useState(
+    data?.databaseName || 'default_db'
+  );
 
   const handleDatabaseNameChange = (e) => {
     const value = e.target.value;
@@ -18,6 +21,8 @@ export const DatabaseNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Database"
+      description="Query saved data and expose the result."
+      variant="database"
       handles={[
         {
           type: 'target',
@@ -31,10 +36,11 @@ export const DatabaseNode = ({ id, data }) => {
         },
       ]}
     >
-      <div>
-        <label>
-          Database:
+      <div className="node-form">
+        <label className="node-field">
+          Database
           <input
+            className="node-input"
             type="text"
             value={databaseName}
             onChange={handleDatabaseNameChange}
@@ -43,4 +49,4 @@ export const DatabaseNode = ({ id, data }) => {
       </div>
     </BaseNode>
   );
-}
+};

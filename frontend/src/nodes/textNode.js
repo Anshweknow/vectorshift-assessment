@@ -28,18 +28,38 @@ const getTextNodeSize = (text, variableCount) => {
   const longestLineLength = Math.max(...lines.map((line) => line.length));
 
   return {
-    width: Math.min(500, Math.max(200, longestLineLength * 8 + 80)),
-    height: Math.max(80, lines.length * 22 + 60, variableCount * 24 + 40),
+    width: Math.min(520, Math.max(260, longestLineLength * 8 + 96)),
+    minHeight: Math.max(
+      128,
+      lines.length * 24 + 88,
+      variableCount * 26 + 56
+    ),
   };
 };
 
 export const TextNode = ({ id, data }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);
   const updateNodeInternals = useUpdateNodeInternals();
-  const [currText, setCurrText] = useState(data?.text || '{{input}}');
 
-  const variables = useMemo(() => getVariablesFromText(currText), [currText]);
-  const nodeSize = useMemo(() => getTextNodeSize(currText, variables.length), [currText, variables.length]);
+  const [currText, setCurrText] = useState(
+    data?.text || '{{input}}'
+  );
+
+  const variables = useMemo(
+    () => getVariablesFromText(currText),
+    [currText]
+  );
+
+  useEffect(() => {
+    if (typeof data?.text === 'string' && data.text !== currText) {
+      setCurrText(data.text);
+    }
+  }, [currText, data?.text]);
+
+  const nodeSize = useMemo(
+    () => getTextNodeSize(currText, variables.length),
+    [currText, variables.length]
+  );
 
   useEffect(() => {
     updateNodeInternals(id);
@@ -56,12 +76,16 @@ export const TextNode = ({ id, data }) => {
     type: 'target',
     position: Position.Left,
     id: `${id}-input-${variable}`,
-    style: {top: getTargetHandleTop(index, variables.length)},
+    style: {
+      top: getTargetHandleTop(index, variables.length),
+    },
   }));
 
   return (
     <BaseNode
       title="Text"
+      description="Use {{variables}} to create dynamic input handles."
+      variant="text"
       style={nodeSize}
       handles={[
         ...variableHandles,
@@ -72,17 +96,16 @@ export const TextNode = ({ id, data }) => {
         },
       ]}
     >
-      <div>
-        <label>
-          Text:
+      <div className="node-form">
+        <label className="node-field">
+          Text
           <textarea
+            className="node-textarea"
             value={currText}
             onChange={handleTextChange}
-            rows={Math.max(1, currText.split('\n').length)}
+            rows={Math.max(2, currText.split('\n').length)}
             style={{
-              width: nodeSize.width - 20,
-              height: nodeSize.height - 45,
-              boxSizing: 'border-box',
+              minHeight: nodeSize.minHeight - 70,
               resize: 'none',
             }}
           />
@@ -90,4 +113,4 @@ export const TextNode = ({ id, data }) => {
       </div>
     </BaseNode>
   );
-}
+};

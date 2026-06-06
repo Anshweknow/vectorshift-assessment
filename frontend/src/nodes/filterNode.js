@@ -7,7 +7,10 @@ import { useStore } from '../store';
 
 export const FilterNode = ({ id, data }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);
-  const [conditionText, setConditionText] = useState(data?.conditionText || 'value contains text');
+
+  const [conditionText, setConditionText] = useState(
+    data?.conditionText || 'value contains text'
+  );
 
   const handleConditionChange = (e) => {
     const value = e.target.value;
@@ -18,6 +21,8 @@ export const FilterNode = ({ id, data }) => {
   return (
     <BaseNode
       title="Filter"
+      description="Allow matching values through the pipeline."
+      variant="filter"
       handles={[
         {
           type: 'target',
@@ -31,10 +36,11 @@ export const FilterNode = ({ id, data }) => {
         },
       ]}
     >
-      <div>
-        <label>
-          Condition:
+      <div className="node-form">
+        <label className="node-field">
+          Condition
           <input
+            className="node-input"
             type="text"
             value={conditionText}
             onChange={handleConditionChange}
@@ -43,4 +49,4 @@ export const FilterNode = ({ id, data }) => {
       </div>
     </BaseNode>
   );
-}
+};

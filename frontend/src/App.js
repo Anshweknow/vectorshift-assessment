@@ -4,11 +4,22 @@ import { SubmitButton } from './submit';
 
 function App() {
   return (
-    <div>
-      <PipelineToolbar />
-      <PipelineUI />
-      <SubmitButton />
-    </div>
+    <main className="app-shell">
+      <div className="app-container">
+        <header className="app-header">
+          <div>
+            <p className="app-eyebrow">VectorShift Assessment</p>
+            <h1 className="app-title">Workflow Builder</h1>
+            <p className="app-subtitle">
+              Compose nodes, connect pipeline steps, and validate graph structure with a polished React Flow workspace.
+            </p>
+          </div>
+        </header>
+        <PipelineToolbar />
+        <PipelineUI />
+        <SubmitButton />
+      </div>
+    </main>
   );
 }
 
